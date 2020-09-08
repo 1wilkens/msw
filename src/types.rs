@@ -1,10 +1,26 @@
+use std::collections::HashMap;
+
 use serde::Deserialize;
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SearchResult {
+    pub isin: String,
+    pub r#type: String,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UnitValue {
     pub value: f32,
     pub unit_code: String,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TranslatedValue {
+    pub original_value: String,
+    pub translations: HashMap<String, String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -47,4 +63,13 @@ pub struct DerivativeMasterData {
     pub figure_spread_rel: f32,
     // underlyings
     pub underlyings: Vec<Underlying>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct EquityMasterData {
+    // identifiers
+    pub isin: String,
+    pub industry_sector: TranslatedValue,
+    pub instrument_type: TranslatedValue,
 }
